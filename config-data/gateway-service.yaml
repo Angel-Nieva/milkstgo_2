@@ -33,3 +33,8 @@ spring:
           uri: lb://grasasolido-service
           predicates:
             - Path=/grasa-solido/**
+      routes:
+        - id: acopio-service
+          uri: lb://acopio-service
+          predicates:
+            - Path=/acopio/**
