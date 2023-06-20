@@ -1,0 +1,35 @@
+server:
+  port: 8080
+        
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: schedule-service
+          uri: lb://schedule-service
+          predicates:
+            - Path=/schedules/**,/clocks/**
+        - id: employee-service
+          uri: lb://employee-service
+          predicates:
+            - Path=/employees/**,/planillas/**
+        - id: justificative-service
+          uri: lb://justificative-service
+          predicates:
+            - Path=/justificative/**
+        - id: authorization-service
+          uri: lb://authorization-service
+          predicates:
+            - Path=/authorization/**            
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      default-zone: ${EUREKA_URL:http://localhost:8761/eureka}
