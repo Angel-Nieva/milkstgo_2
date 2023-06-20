@@ -18,7 +18,7 @@ import java.text.ParseException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/acopios")
+@RequestMapping("/acopio")
 public class AcopioController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class AcopioController {
         }
         return ResponseEntity.ok(acopios);
     }
-    
+
     @PostMapping("/fileUploadAcopios")
     public void upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) throws FileNotFoundException, ParseException {
         acopioServices.guardarArchivoAcopio(file);
