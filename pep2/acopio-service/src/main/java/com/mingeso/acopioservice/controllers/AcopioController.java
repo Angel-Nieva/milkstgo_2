@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/acopio")
 public class AcopioController {
 
