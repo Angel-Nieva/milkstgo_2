@@ -20,12 +20,21 @@ public class GrasaSolidoController {
     private GrasaSolidoService grasa_solidoService;
 
     @GetMapping()
-    public ResponseEntity<List<GrasaSolidoEntity>> obtenerGrasaSolidos(Model model) {
-        List<GrasaSolidoEntity> grasas_solidos = grasa_solidoService.obtenerGrasaSolidos();
-        if(grasas_solidos.isEmpty()){
+    public ResponseEntity<List<GrasaSolidoEntity>> obtenerGrasaSolidos() {
+        List<GrasaSolidoEntity> grasaSolidos = grasa_solidoService.obtenerGrasaSolidos();
+        if(grasaSolidos.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(grasas_solidos);
+        return ResponseEntity.ok(grasaSolidos);
+    }
+
+    @GetMapping("/byProveedor/{proveedor}")
+    public ResponseEntity<GrasaSolidoEntity> obtenerGrasaSolidoByProveedor(@PathVariable("proveedor") String proveedor) {
+        GrasaSolidoEntity grasaSolido = grasa_solidoService.obtenerGrasaSolidoByProveedor(proveedor);
+        if(grasaSolido == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(grasaSolido);
     }
 
     @PostMapping("/fileUpload")

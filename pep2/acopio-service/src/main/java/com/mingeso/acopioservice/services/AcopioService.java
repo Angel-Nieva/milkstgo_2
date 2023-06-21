@@ -100,23 +100,23 @@ public class AcopioService {
         }
     }
 
-    public Integer  klsLeche(String proveedor){
+    public Integer klsLeche(String proveedor){
         return acopioRepository.klsLecheByproveedor(proveedor);
     }
 
-    public Date obtenerQuincenaProveedor(String proveedor){return acopioRepository.quincenaByProveedor(proveedor); }
+    public Date obtenerQuincenaByProveedor(String proveedor){return acopioRepository.quincenaByProveedor(proveedor); }
 
     public Integer obtenerDiasEnvioLeche(String proveedor){return acopioRepository.diasEnvioLeche(proveedor);}
 
     public Integer obtenerPromedioDiarioLeche(String proveedor){return acopioRepository.avgEnvioLeche(proveedor);}
 
     // Calcula la cantidad de envios durante la tarde para el ultimo acopio
-    public int  envioProveedorTarde(String proveedor){
+    public Integer  enviosTardeByProveedor(String proveedor){
         return acopioRepository.envioProveedorTarde(proveedor);
     }
 
     // Calcula la cantidad de envios durante la mañana para el ultimo acopio
-    public int  envioProveedorManana(String proveedor){
+    public Integer  enviosMananaByProveedor(String proveedor){
         return acopioRepository.envioProveedorManana(proveedor);
     }
 

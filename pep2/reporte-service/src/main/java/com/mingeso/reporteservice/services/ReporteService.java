@@ -1,5 +1,7 @@
 package com.mingeso.reporteservice.services;
 
+import com.mingeso.reporteservice.entities.ReporteEntity;
+import com.mingeso.reporteservice.models.GrasaSolidoModel;
 import com.mingeso.reporteservice.models.ProveedorModel;
 import com.mingeso.reporteservice.repositories.ReporteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,45 @@ public class ReporteService {
         return codigoProveedores;
     }
 
+    public ProveedorModel obtenerProovedorByCodigo(String codigo){
+        ProveedorModel proveedor = restTemplate.getForObject("http://proveedor-service/proveedor/byCodigo/" + codigo, ProveedorModel.class);
+        return proveedor;
+    }
+
+    public GrasaSolidoModel obtenerGrasaSolidoByProveedor(String proveedor){
+        GrasaSolidoModel grasaSolido = restTemplate.getForObject("http://grasasolido-service/grasa-solido/byProveedor/" + proveedor, GrasaSolidoModel.class);
+        return grasaSolido;
+    }
+
+    public Date obtenerQuincenaByProveedor(String proveedor){
+        Date quincena = restTemplate.getForObject("http://acopio-service/acopio/quincena/" + proveedor, Date.class);
+        return quincena;
+    }
+
+    public Integer klsLeche(String proveedor){
+        Integer leche = restTemplate.getForObject("http://acopio-service/acopio/leche/" + proveedor, Integer.class);
+        return leche;
+    }
+
+    public Integer obtenerDiasEnvioLeche(String proveedor){
+        Integer dias = restTemplate.getForObject("http://acopio-service/acopio/diasEnvio/" + proveedor, Integer.class);
+        return  dias;
+    }
+
+    public Integer obtenerPromedioDiarioLeche(String proveedor){
+        Integer promedio = restTemplate.getForObject("http://acopio-service/acopio/promedioDias/" + proveedor, Integer.class);
+        return  promedio;
+    }
+
+    public Integer enviosTardeByProveedor(String proveedor){
+        Integer enviosTarde = restTemplate.getForObject("http://acopio-service/acopio/enviosTardeByProveedor/" + proveedor, Integer.class);
+        return  enviosTarde;
+    }
+
+    public Integer enviosMananaByProveedor(String proveedor){
+        Integer enviosManana = restTemplate.getForObject("http://acopio-service/acopio/enviosMananaByProveedor/" + proveedor, Integer.class);
+        return  enviosManana;
+    }
 
     public void calcularPlantillaPago(){
         List<String> codigoProveedores = obtenerCodigosProveedores();
@@ -31,25 +72,22 @@ public class ReporteService {
         }
     }
 
-    public ProveedorModel obtenerProovedorByCodigo(String codigo){
-        ProveedorModel proveedor = restTemplate.getForObject("http://proveedor-service/proveedor/byCodigo/" + codigo,ProveedorModel.class);
-        return proveedor;
-    }
-
     public ReporteEntity calularReporte(String codigoProveedor){
-        ProveedorEntity proveedor = proveedorService.obtenerProovedorByCodigo(codigoProveedor);
+        ProveedorModel proveedor = obtenerProovedorByCodigo(codigoProveedor);
         String codigo = proveedor.getCodigo();
-        GrasaSolidoEntity grasaSolido = grasaSolidoService.buscarPorProveedor(codigo);
+
+        GrasaSolidoModel grasaSolido = obtenerGrasaSolidoByProveedor(codigo);
+
         ReporteEntity reporteAnterior = buscarReporteAnterior(
-                acopioService.obtenerQuincenaProveedor(codigo), codigo);
+                obtenerQuincenaByProveedor(codigo), codigo);
         ReporteEntity reporteActual = new ReporteEntity();
 
-        reporteActual.setQuincena(acopioService.obtenerQuincenaProveedor(codigo));
+        reporteActual.setQuincena(obtenerQuincenaByProveedor(codigo));
         reporteActual.setCodigo_proveedor(codigo);
         reporteActual.setNombre_proveedor(proveedor.getNombre());
-        reporteActual.setKls_leche(acopioService.klsLeche(codigo));
-        reporteActual.setDiasEnvioLeche(acopioService.obtenerDiasEnvioLeche(codigo));
-        reporteActual.setAvgKls_leche(acopioService.obtenerPromedioDiarioLeche(codigo));
+        reporteActual.setKls_leche(klsLeche(codigo));
+        reporteActual.setDiasEnvioLeche(obtenerDiasEnvioLeche(codigo));
+        reporteActual.setAvgKls_leche(obtenerPromedioDiarioLeche(codigo));
         reporteActual.setVariacion_leche(variacionPorcentual(
                 reporteActual.getKls_leche(),
                 reporteAnterior.getKls_leche()));
@@ -71,8 +109,8 @@ public class ReporteService {
                 grasaSolido.getSolido(),
                 reporteActual.getKls_leche()));
         reporteActual.setBonificacion_frecuencia( pagoBonificacionFrecuencia(
-                acopioService.envioProveedorTarde(codigo),
-                acopioService.envioProveedorManana(codigo),
+                enviosTardeByProveedor(codigo),
+                enviosMananaByProveedor(codigo),
                 reporteActual.getPago_leche() ));
 
         int pagoAcopioLeche =  pagoAcopioLeche(reporteActual.getPago_leche(),

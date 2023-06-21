@@ -98,5 +98,5 @@ public class GrasaSolidoService {
         }
     }
 
-    public GrasaSolidoEntity buscarPorProveedor(String proveedor){return grasaSolidoRepository.findByProveedor(proveedor);}
+    public GrasaSolidoEntity obtenerGrasaSolidoByProveedor(String proveedor){return grasaSolidoRepository.findByProveedor(proveedor);}
 }
