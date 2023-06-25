@@ -28,18 +28,17 @@ spring:
           uri: lb://proveedor-service
           predicates:
             - Path=/proveedor/**
-      routes:
+
         - id: grasasolido-service
           uri: lb://grasasolido-service
           predicates:
             - Path=/grasa-solido/**
-      routes:
+
         - id: acopio-service
           uri: lb://acopio-service
           predicates:
             - Path=/acopio/**
-      routes:
-      - id: reporte-service
-        uri: lb://reporte-service
-        predicates:
-          - Path=/reporte/**
+        - id: reporte-service
+          uri: lb://reporte-service
+          predicates:
+            - Path=/reporte/**
