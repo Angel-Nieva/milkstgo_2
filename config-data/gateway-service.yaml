@@ -38,8 +38,8 @@ spring:
           uri: lb://acopio-service
           predicates:
             - Path=/acopio/**
-        routes:
-        - id: reporte-service
-          uri: lb://reporte-service
-          predicates:
-            - Path=/reporte/**
+      routes:
+      - id: reporte-service
+        uri: lb://reporte-service
+        predicates:
+          - Path=/reporte/**
