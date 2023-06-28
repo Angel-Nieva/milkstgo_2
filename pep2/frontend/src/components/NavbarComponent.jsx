@@ -34,8 +34,8 @@ function NavbarComponent(){
                                         data-bs-toggle="dropdown" > Proveedores </a>
                                         <ul className="dropdown-menu">
                                             <li>
-                                                <Link className="dropdown-item" to="#"> Listar proveedores</Link>                                            
-                                                <Link className="dropdown-item" to="#"> Nuevo Proveedor</Link>
+                                                <Link className="dropdown-item" to="/"> Listar proveedores</Link>                                            
+                                                <Link className="dropdown-item" to="/add-proveedor"> Nuevo Proveedor</Link>
                                             </li>
                                         </ul>
                                     </li>

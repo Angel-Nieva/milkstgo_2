@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import { createGlobalStyle } from 'styled-components'
-import img from '../banner-img.jpg';
+import ProveedorService from "../services/ProveedorService";
 
-class IndexComponent extends Component {
+class ProveedorComponent extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -12,23 +11,22 @@ class IndexComponent extends Component {
     }
 
     componentDidMount(){
-        fetch("http://localhost:8082/proveedor")
-        .then((response) => response.json())
-        .then((data) => this.setState({ proveedores: data }));
+        ProveedorService.getProveedores().then((res) => {
+            this.setState({ proveedores: res.data});
+        });
     }
+
 
     render(){
         return (          
             <div>
-                <GlobalStyle/>
                 <Styles>
-                <body>
                     <br></br>
-                    <div class="container d-flex justify-content-center">
-                        <div class="outer-wrapper ">
-                            <div class="table-wrapper">
+                    <div className="container d-flex justify-content-center">
+                        <div className="outer-wrapper ">
+                            <div className="table-wrapper">
                                 <table>
-                                    <thead class="thead-dark">
+                                    <thead className="thead-dark">
                                         <tr>
                                             <th>ID</th>
                                             <th>Codigo</th>
@@ -52,7 +50,7 @@ class IndexComponent extends Component {
                             </div>
                         </div>
                     </div>
-                </body>
+                
                 </Styles>    
             </div>
             
@@ -61,15 +59,7 @@ class IndexComponent extends Component {
 
 }
 
-export default IndexComponent; 
-
-const GlobalStyle = createGlobalStyle`
-    body {
-        background-image: url(${img});
-        background-size: cover;
-        min-height: 100vh;
-    }
-`
+export default ProveedorComponent; 
 
 const Styles = styled.div`
 
