@@ -46,8 +46,8 @@ function NavbarComponent(){
                                         data-bs-toggle="dropdown" > Acopios </a>
                                         <ul className="dropdown-menu">
                                             <li>
-                                                <Link className="dropdown-item" to="#"> Listar Acopios</Link>
-                                                <Link className="dropdown-item" to="#"> Subir Archivo</Link>
+                                                <Link className="dropdown-item" to="/acopio"> Listar Acopios</Link>
+                                                <Link className="dropdown-item" to="/fileUpload-acopio"> Subir Archivo</Link>
                                             </li>
                                         </ul>
                                     </li>

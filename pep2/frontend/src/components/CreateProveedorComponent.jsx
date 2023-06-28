@@ -98,7 +98,7 @@ export default function CreateProveedorComponent(props) {
                                 </Form.Group>
                             </Form>
                             <div className="contenedor-button">
-                            <Button  className="boton" onClick={ingresarProveedor}>Registrar Proveedor</Button>
+                                <Button  className="boton" onClick={ingresarProveedor}>Registrar Proveedor</Button>
                             </div>
                             
                         </div>
