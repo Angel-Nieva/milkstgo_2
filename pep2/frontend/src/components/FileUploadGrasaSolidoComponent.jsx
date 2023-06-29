@@ -3,10 +3,10 @@ import swal from 'sweetalert';
 import styled from "styled-components";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import AcopioService from "../services/AcopioService";
+import GrasaSolidoService from "../services/GrasaSolidoService";
 
 
-class FileUploadAcopioComponent extends Component{
+class FileUploadGrasaSolidoComponent extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +22,7 @@ class FileUploadAcopioComponent extends Component{
   onFileUpload = () => {
     swal({
       title: "¿Está seguro de que desea cargar el archivo de texto?",
-      text: "Tenga en cuenta que el archivo solo será cargado si su nombre es 'Acopio.txt' y si su formato es correcto.",
+      text: "Tenga en cuenta que el archivo solo será cargado si su nombre es 'Grasas.txt' y si su formato es correcto.",
       icon: "warning",
       buttons: ["Cancelar", "Cargar"],
       dangerMode: true
@@ -31,7 +31,7 @@ class FileUploadAcopioComponent extends Component{
         swal("Archivo cargado correctamente!", {icon: "success", timer: "3000"});
         const formData = new FormData();
         formData.append("file", this.state.file);
-        AcopioService.CargarArchivo(formData).then((res) => {
+        GrasaSolidoService.CargarArchivo(formData).then((res) => {
         });
       }
       else{
@@ -47,7 +47,8 @@ class FileUploadAcopioComponent extends Component{
         <div>
             <div className="f">
               <div className="container-fileUpload">
-                  <h1><b>Cargar el archivo de Acopios</b></h1>
+                    <h1><b>Cargar el archivo con el %</b></h1>
+                    <h1><b>Grasa y Solidos</b></h1>
                     <hr />
                     <Form.Group className="mb-3" controlId="formFileLg">
                         <Form.Control type="file" size="lg" onChange={this.onFileChange} />
@@ -71,7 +72,7 @@ class FileUploadAcopioComponent extends Component{
   }
 
 }
-export default FileUploadAcopioComponent;
+export default FileUploadGrasaSolidoComponent;
 
 const Styles = styled.div`
   .container-fileUpload{
@@ -102,4 +103,6 @@ const Styles = styled.div`
     display: flex;
     justify-content: center;
   }
+
+
 `

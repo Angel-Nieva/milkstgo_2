@@ -1,34 +1,33 @@
 import React, {Component} from "react";
 import styled from "styled-components";
-import AcopioService from "../services/AcopioService";
+import GrasaSolidoService from "../services/GrasaSolidoService";
 
-class AcopioComponent extends Component {
+class GrasaSolidoComponent extends Component {
     constructor(props){
         super(props);
         this.state = {
-            acopios: [],
+            grasaSolidos: [],
         };
     }
 
     renderList = () => {
-        if (!Array.isArray(this.state.acopios)) {
+        if (!Array.isArray(this.state.grasaSolidos)) {
             return null; // or render an appropriate loading/error message
         }
 
-        return this.state.acopios.map((acopio) => (
-            <tr key={acopio.id}>
-              <td>{acopio.id}</td>
-              <td>{acopio.fecha}</td>
-              <td>{acopio.turno}</td>
-              <td>{acopio.proveedor}</td>
-              <td>{acopio.kls_leche}</td>
+        return this.state.grasaSolidos.map((grasaSolido) => (
+            <tr key={grasaSolido.id}>
+              <td>{grasaSolido.id}</td>
+              <td>{grasaSolido.proveedor}</td>
+              <td>{grasaSolido.grasa}</td>
+              <td>{grasaSolido.solido}</td>
             </tr>
           ));
     }
 
     componentDidMount(){
-        AcopioService.getAcopios().then((res) => {
-            this.setState({ acopios: res.data});
+        GrasaSolidoService.getGrasaSolido().then((res) => {
+            this.setState({ grasaSolidos: res.data});
         });
     }
 
@@ -45,10 +44,9 @@ class AcopioComponent extends Component {
                                     <thead className="thead">
                                         <tr>
                                             <th>ID</th>
-                                            <th>FECHA</th>
-                                            <th>TURNO</th>
                                             <th>PROVEEDOR</th>
-                                            <th>KLS LECHE</th>
+                                            <th>GRASA</th>
+                                            <th>SOLIDO</th>
                                         </tr>
                                     </thead>
 
@@ -68,7 +66,7 @@ class AcopioComponent extends Component {
 
 }
 
-export default AcopioComponent; 
+export default GrasaSolidoComponent;
 
 const Styles = styled.div`
 
@@ -99,7 +97,17 @@ const Styles = styled.div`
         top: 0;
         background-color:   blue ;
     }
-        
+    
+    .table-wrapper-scroll{
+        overflow-y: scroll;
+        overflow-x: scroll;
+        height: fit-content;
+        max-height: 66.4vh;
+        margin-top: 22px;
+        margin: 15px;
+        padding-bottom: 20px;
+    }
+    
     table {
         min-width: max-content;
         border-collapse: separate;
